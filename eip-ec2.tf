@@ -13,7 +13,7 @@ resource "aws_instance" "web" {
 
   }
 }
-
+##
 output "Server-IP" {
   #value = aws_instance.web1.public_ip
   value = aws_eip.IP2.public_ip
