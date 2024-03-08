@@ -1,4 +1,4 @@
-/*
+
 resource "aws_eip" "IP2" {
   instance = aws_instance.web.id
   domain   = "vpc"
@@ -25,5 +25,3 @@ output "public_ip" {
 output "private_ip" {
   value = aws_instance.example.private_ip
 }
-
-*/
