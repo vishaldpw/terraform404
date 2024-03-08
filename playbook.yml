@@ -1,0 +1,12 @@
+---
+- name: Ubuntu System Post install
+  hosts: all
+  enable: true
+  tasks:
+- name: Install apache httpd  (state=present is optional)
+  ansible.builtin.apt:
+     name: apache2
+     state: present
+
+    
+
