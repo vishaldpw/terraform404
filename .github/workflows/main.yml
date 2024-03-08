@@ -1,4 +1,4 @@
-name: Terraform and Ansible Workflow
+name: Terraform Provision and Ansible Patch
 
 on:
   push:
@@ -28,6 +28,8 @@ jobs:
     - name: Terraform Apply
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve tfplan
+      id: terraform_apply
+      continue-on-error: true
   
   ansible:
     name: Run Ansible
@@ -38,6 +40,17 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Capture Terraform Outputs
+      if: ${{ needs.terraform.result == 'success' }}
+      id: terraform_outputs
+      run: |
+        INSTANCE_ID=$(terraform output -raw instance_id)
+        PUBLIC_IP=$(terraform output -raw public_ip)
+        PRIVATE_IP=$(terraform output -raw private_ip)
+        echo "::set-output name=instance_id::$INSTANCE_ID"
+        echo "::set-output name=public_ip::$PUBLIC_IP"
+        echo "::set-output name=private_ip::$PRIVATE_IP"
       
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -50,4 +63,7 @@ jobs:
         pip3 install ansible
       
     - name: Run Ansible Playbook
-      run: ansible-playbook playbook.yml
+      if: success()
+      run: ansible-playbook -i ${{ steps.terraform_outputs.outputs.public_ip }}, playbook.yml
+      env:
+        ANSIBLE_HOST_KEY_CHECKING: False
