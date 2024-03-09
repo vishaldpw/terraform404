@@ -9,19 +9,18 @@ resource "aws_instance" "web" {
   instance_type = var.instance
   key_name      = "black-Bottle"
   tags = {
-    Name = "Ubuntu1"
-
+    Name = var.name
   }
 }
 ##
 output "instance_id" {
-  value = aws_instance.example.id
+  value = aws_instance.web.id
 }
 
 output "public_ip" {
-  value = aws_instance.example.public_ip
+  value = aws_instance.web.public_ip
 }
 
 output "private_ip" {
-  value = aws_instance.example.private_ip
+  value = aws_instance.web.private_ip
 }

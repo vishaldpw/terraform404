@@ -7,3 +7,7 @@ variable "instance" {
   default = "t2.micro"
 
 }
+
+variable "name" {
+  type = string
+}
