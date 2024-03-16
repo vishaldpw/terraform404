@@ -7,7 +7,7 @@ resource "aws_eip" "IP2" {
 resource "aws_instance" "web" {
   ami           = "ami-0f5daaa3a7fb3378b"
   instance_type = var.instance
-  key_name      = "blue-bootle"
+  key_name      = "black-Bottle"
   tags = {
     Name = var.name   
   }
@@ -15,7 +15,7 @@ resource "aws_instance" "web" {
     host = aws_instance.web.public_ip
     type = "ssh"
     user = "ubuntu"
-    private_key = file("./blue-bootle.pem")
+    private_key = file(".\\black-Bottle.pem")
   }
   provisioner "remote-exec" {
     inline = [
