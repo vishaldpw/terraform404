@@ -11,3 +11,7 @@ variable "instance" {
 variable "name" {
   type = string
 }
+
+variable "name2" {
+  type = string
+}
