@@ -28,6 +28,10 @@ resource "aws_instance" "web" {
       "sudo reboot"
     ]
   }
+   provisioner "file" {
+    source      = "ansible.tar"
+    destination = "/home/ubuntu/ansible.tar"
+}
 }
 ##
 output "instance_id" {
